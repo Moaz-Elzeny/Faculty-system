@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FacultyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Departments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Photo" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Deptid" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Faculty.dbo.WebsiteDesc' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="WebsiteDesc">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nchar" MaxLength="10" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Image" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK_Student_Departments">
+    <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departments">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="Deptid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FacultyModelStoreContainer">
+    <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WebsiteDesc" EntityType="Self.WebsiteDesc" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [WebsiteDesc].[Id] AS [Id], 
+    [WebsiteDesc].[Title] AS [Title], 
+    [WebsiteDesc].[Description] AS [Description], 
+    [WebsiteDesc].[Image] AS [Image]
+    FROM [dbo].[WebsiteDesc] AS [WebsiteDesc]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Student_Departments" Association="Self.FK_Student_Departments">
+      <End Role="Departments" EntitySet="Departments" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

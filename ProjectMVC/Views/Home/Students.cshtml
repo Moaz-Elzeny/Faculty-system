@@ -1,0 +1,22 @@
+﻿@using ProjectMVC.Models
+@model List<Student>
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-6">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="~/Images/success-student-logo-graduation-sign-logo-symbol-vector-28120151 (.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Age</p>
+                        <p class="card-text">@item.Address</p>
+                        @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
